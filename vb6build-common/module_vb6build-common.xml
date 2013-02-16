@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="module_vb6build-common" default="compile.module.vb6build-common">
+  <dirname property="module.vb6build-common.basedir" file="/module_vb6build-common.xml"/>
+  
+  <property name="module.jdk.home.vb6build-common" value="${jdk.home.1.6_(1)}"/>
+  <property name="module.jdk.bin.vb6build-common" value="${jdk.bin.1.6_(1)}"/>
+  <property name="module.jdk.classpath.vb6build-common" value="jdk.classpath.1.6_(1)"/>
+  
+  <property name="compiler.args.vb6build-common" value="${compiler.args}"/>
+  
+  <property name="vb6build-common.output.dir" value="vb6build-common/../out/production/vb6build-common"/>
+  <property name="vb6build-common.testoutput.dir" value="vb6build-common/../out/test/vb6build-common"/>
+  
+  <path id="vb6build-common.module.bootclasspath">
+    <!-- Paths to be included in compilation bootclasspath -->
+  </path>
+  
+  <path id="vb6build-common.module.production.classpath">
+    <path refid="${module.jdk.classpath.vb6build-common}"/>
+    <pathelement location="C:/TeamCity/devPackage/server-api.jar"/>
+    <pathelement location="C:/TeamCity/devPackage/common-api.jar"/>
+    <pathelement location="C:/TeamCity/devPackage/agent-api.jar"/>
+  </path>
+  
+  <path id="vb6build-common.runtime.production.module.classpath">
+    <pathelement location="${vb6build-common.output.dir}"/>
+    <pathelement location="C:/TeamCity/devPackage/server-api.jar"/>
+    <pathelement location="C:/TeamCity/devPackage/common-api.jar"/>
+    <pathelement location="C:/TeamCity/devPackage/agent-api.jar"/>
+  </path>
+  
+  <path id="vb6build-common.module.classpath">
+    <path refid="${module.jdk.classpath.vb6build-common}"/>
+    <pathelement location="${vb6build-common.output.dir}"/>
+    <pathelement location="C:/TeamCity/devPackage/server-api.jar"/>
+    <pathelement location="C:/TeamCity/devPackage/common-api.jar"/>
+    <pathelement location="C:/TeamCity/devPackage/agent-api.jar"/>
+  </path>
+  
+  <path id="vb6build-common.runtime.module.classpath">
+    <pathelement location="${vb6build-common.testoutput.dir}"/>
+    <pathelement location="${vb6build-common.output.dir}"/>
+    <pathelement location="C:/TeamCity/devPackage/server-api.jar"/>
+    <pathelement location="C:/TeamCity/devPackage/common-api.jar"/>
+    <pathelement location="C:/TeamCity/devPackage/agent-api.jar"/>
+  </path>
+  
+  
+  <patternset id="excluded.from.module.vb6build-common">
+    <patternset refid="ignored.files"/>
+  </patternset>
+  
+  <patternset id="excluded.from.compilation.vb6build-common">
+    <patternset refid="excluded.from.module.vb6build-common"/>
+  </patternset>
+  
+  <path id="vb6build-common.module.sourcepath">
+    <dirset dir="vb6build-common">
+      <include name="src"/>
+    </dirset>
+  </path>
+  
+  
+  <target name="compile.module.vb6build-common" depends="compile.module.vb6build-common.production,compile.module.vb6build-common.tests" description="Compile module vb6build-common"/>
+  
+  <target name="compile.module.vb6build-common.production" depends="register.custom.compilers" description="Compile module vb6build-common; production classes">
+    <mkdir dir="${vb6build-common.output.dir}"/>
+    <javac2 destdir="${vb6build-common.output.dir}" debug="${compiler.debug}" nowarn="${compiler.generate.no.warnings}" memorymaximumsize="${compiler.max.memory}" fork="true" executable="${module.jdk.bin.vb6build-common}/javac">
+      <compilerarg line="${compiler.args.vb6build-common}"/>
+      <bootclasspath refid="vb6build-common.module.bootclasspath"/>
+      <classpath refid="vb6build-common.module.production.classpath"/>
+      <src refid="vb6build-common.module.sourcepath"/>
+      <patternset refid="excluded.from.compilation.vb6build-common"/>
+    </javac2>
+    
+    <copy todir="${vb6build-common.output.dir}">
+      <fileset dir="vb6build-common/src">
+        <patternset refid="compiler.resources"/>
+        <type type="file"/>
+      </fileset>
+    </copy>
+  </target>
+  
+  <target name="compile.module.vb6build-common.tests" depends="register.custom.compilers,compile.module.vb6build-common.production" description="compile module vb6build-common; test classes" unless="skip.tests"/>
+  
+  <target name="clean.module.vb6build-common" description="cleanup module">
+    <delete dir="${vb6build-common.output.dir}"/>
+    <delete dir="${vb6build-common.testoutput.dir}"/>
+  </target>
+</project>

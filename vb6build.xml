@@ -1,0 +1,497 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="vb6build" default="all">
+  
+  
+  <property file="vb6build.properties"/>
+  <!-- Uncomment the following property if no tests compilation is needed -->
+  <!-- 
+  <property name="skip.tests" value="true"/>
+   -->
+  
+  <!-- Compiler options -->
+  
+  <property name="compiler.debug" value="on"/>
+  <property name="compiler.generate.no.warnings" value="off"/>
+  <property name="compiler.args" value=""/>
+  <property name="compiler.max.memory" value="128m"/>
+  <patternset id="ignored.files">
+    <exclude name="**/CVS/**"/>
+    <exclude name="**/SCCS/**"/>
+    <exclude name="**/RCS/**"/>
+    <exclude name="**/rcs/**"/>
+    <exclude name="**/.DS_Store/**"/>
+    <exclude name="**/.svn/**"/>
+    <exclude name="**/.pyc/**"/>
+    <exclude name="**/.pyo/**"/>
+    <exclude name="**/*.pyc/**"/>
+    <exclude name="**/*.pyo/**"/>
+    <exclude name="**/.git/**"/>
+    <exclude name="**/*.hprof/**"/>
+    <exclude name="**/_svn/**"/>
+    <exclude name="**/.sbas/**"/>
+    <exclude name="**/.IJI.*/**"/>
+    <exclude name="**/vssver.scc/**"/>
+    <exclude name="**/vssver2.scc/**"/>
+    <exclude name="**/.hg/**"/>
+    <exclude name="**/*.orig/**"/>
+    <exclude name="**/*.lib/**"/>
+    <exclude name="**/*~/**"/>
+  </patternset>
+  <patternset id="library.patterns">
+    <include name="*.war"/>
+    <include name="*.ear"/>
+    <include name="*.zip"/>
+    <include name="*.swc"/>
+    <include name="*.egg"/>
+    <include name="*.jar"/>
+  </patternset>
+  <patternset id="compiler.resources">
+    <include name="**/?*.properties"/>
+    <include name="**/?*.xml"/>
+    <include name="**/?*.gif"/>
+    <include name="**/?*.png"/>
+    <include name="**/?*.jpeg"/>
+    <include name="**/?*.jpg"/>
+    <include name="**/?*.html"/>
+    <include name="**/?*.dtd"/>
+    <include name="**/?*.tld"/>
+    <include name="**/?*.ftl"/>
+  </patternset>
+  
+  
+  <!-- Application Server Libraries -->
+  
+  <!-- Modules -->
+  
+  
+  <!-- Module vb6build-common -->
+  
+  <dirname property="module.vb6build-common.basedir" file="${ant.file}"/>
+  
+  
+  
+  <property name="compiler.args.vb6build-common" value="${compiler.args}"/>
+  
+  <property name="vb6build-common.output.dir" value="${module.vb6build-common.basedir}/vb6build-common/classes"/>
+  <property name="vb6build-common.testoutput.dir" value="${module.vb6build-common.basedir}/vb6build-common/classes"/>
+  
+  <path id="vb6build-common.module.bootclasspath">
+    <!-- Paths to be included in compilation bootclasspath -->
+  </path>
+  
+  <path id="vb6build-common.module.production.classpath">
+    <pathelement location="${path.variable.teamcity_root}/webapps/ROOT/WEB-INF/lib/annotations.jar"/>
+  </path>
+  
+  <path id="vb6build-common.runtime.production.module.classpath">
+    <pathelement location="${vb6build-common.output.dir}"/>
+    <pathelement location="${path.variable.teamcity_root}/webapps/ROOT/WEB-INF/lib/annotations.jar"/>
+  </path>
+  
+  <path id="vb6build-common.module.classpath">
+    <pathelement location="${vb6build-common.output.dir}"/>
+    <pathelement location="${path.variable.teamcity_root}/webapps/ROOT/WEB-INF/lib/annotations.jar"/>
+  </path>
+  
+  <path id="vb6build-common.runtime.module.classpath">
+    <pathelement location="${vb6build-common.output.dir}"/>
+    <pathelement location="${path.variable.teamcity_root}/webapps/ROOT/WEB-INF/lib/annotations.jar"/>
+  </path>
+  
+  
+  <patternset id="excluded.from.module.vb6build-common">
+    <patternset refid="ignored.files"/>
+  </patternset>
+  
+  <patternset id="excluded.from.compilation.vb6build-common">
+    <patternset refid="excluded.from.module.vb6build-common"/>
+  </patternset>
+  
+  <path id="vb6build-common.module.sourcepath">
+    <dirset dir="${module.vb6build-common.basedir}/vb6build-common">
+      <include name="src"/>
+    </dirset>
+  </path>
+  
+  
+  <target name="compile.module.vb6build-common" depends="compile.module.vb6build-common.production" description="Compile module vb6build-common"/>
+  
+  <target name="compile.module.vb6build-common.production" description="Compile module vb6build-common; production classes">
+    <mkdir dir="${vb6build-common.output.dir}"/>
+    <javac destdir="${vb6build-common.output.dir}" debug="${compiler.debug}" nowarn="${compiler.generate.no.warnings}" memorymaximumsize="${compiler.max.memory}" fork="true">
+      <compilerarg line="${compiler.args.vb6build-common}"/>
+      <bootclasspath refid="vb6build-common.module.bootclasspath"/>
+      <classpath refid="vb6build-common.module.production.classpath"/>
+      <src refid="vb6build-common.module.sourcepath"/>
+      <patternset refid="excluded.from.compilation.vb6build-common"/>
+    </javac>
+    
+    <copy todir="${vb6build-common.output.dir}">
+      <fileset dir="${module.vb6build-common.basedir}/vb6build-common/src">
+        <patternset refid="compiler.resources"/>
+        <type type="file"/>
+      </fileset>
+    </copy>
+  </target>
+  
+  <target name="clean.module.vb6build-common" description="cleanup module">
+    <delete dir="${vb6build-common.output.dir}"/>
+    <delete dir="${vb6build-common.testoutput.dir}"/>
+  </target>
+  
+  
+  <!-- Module web -->
+  
+  <dirname property="module.web.basedir" file="${ant.file}"/>
+  
+  
+  
+  <property name="compiler.args.web" value="${compiler.args}"/>
+  
+  <property name="web.output.dir" value="${module.web.basedir}/web/classes"/>
+  <property name="web.testoutput.dir" value="${module.web.basedir}/web/classes"/>
+  
+  <path id="web.module.bootclasspath">
+    <!-- Paths to be included in compilation bootclasspath -->
+  </path>
+  
+  <path id="web.module.production.classpath"/>
+  
+  <path id="web.runtime.production.module.classpath">
+    <pathelement location="${web.output.dir}"/>
+  </path>
+  
+  <path id="web.module.classpath">
+    <pathelement location="${web.output.dir}"/>
+  </path>
+  
+  <path id="web.runtime.module.classpath">
+    <pathelement location="${web.output.dir}"/>
+  </path>
+
+
+  
+  
+  <!-- Module vb6build -->
+  
+  <dirname property="module.vb6build-agent.basedir" file="${ant.file}"/>
+  
+  
+  
+  <property name="compiler.args.vb6build" value="${compiler.args}"/>
+  
+  <property name="vb6build-agent.output.dir" value="${module.vb6build-agent.basedir}/vb6build-agent/classes"/>
+  <property name="vb6build-agent.testoutput.dir" value="${module.vb6build-agent.basedir}/vb6build-agent/classes"/>
+  
+  <path id="vb6build-agent.module.bootclasspath">
+    <!-- Paths to be included in compilation bootclasspath -->
+  </path>
+  
+  <path id="vb6build-agent.module.production.classpath">
+    <pathelement location="${path.variable.teamcity_root}/buildAgent/lib/agent.jar"/>
+    <pathelement location="${path.variable.teamcity_root}/devPackage/common-api.jar"/>
+    <pathelement location="${path.variable.teamcity_root}/devPackage/agent-api.jar"/>
+    <pathelement location="${path.variable.teamcity_root}/webapps/ROOT/WEB-INF/lib/annotations.jar"/>
+    <pathelement location="${vb6build-common.output.dir}"/>
+    <pathelement location="${path.variable.teamcity_root}/webapps/ROOT/WEB-INF/lib/log4j-1.2.12.jar"/>
+    <pathelement location="${path.variable.teamcity_root}/webapps/ROOT/WEB-INF/lib/util.jar"/>
+    <pathelement location="${path.variable.teamcity_root}/webapps/ROOT/WEB-INF/lib/openapi.jar"/>
+  </path>
+  
+  <path id="vb6build-agent.runtime.production.module.classpath">
+    <pathelement location="${vb6build-agent.output.dir}"/>
+    <pathelement location="${path.variable.teamcity_root}/buildAgent/lib/agent.jar"/>
+    <pathelement location="${path.variable.teamcity_root}/devPackage/common-api.jar"/>
+    <pathelement location="${path.variable.teamcity_root}/devPackage/agent-api.jar"/>
+    <pathelement location="${path.variable.teamcity_root}/webapps/ROOT/WEB-INF/lib/annotations.jar"/>
+    <pathelement location="${vb6build-common.output.dir}"/>
+    <pathelement location="${path.variable.teamcity_root}/webapps/ROOT/WEB-INF/lib/annotations.jar"/>
+    <pathelement location="${path.variable.teamcity_root}/webapps/ROOT/WEB-INF/lib/log4j-1.2.12.jar"/>
+    <pathelement location="${path.variable.teamcity_root}/webapps/ROOT/WEB-INF/lib/util.jar"/>
+    <pathelement location="${path.variable.teamcity_root}/webapps/ROOT/WEB-INF/lib/openapi.jar"/>
+  </path>
+  
+  <path id="vb6build-agent.module.classpath">
+    <pathelement location="${vb6build-agent.output.dir}"/>
+    <pathelement location="${path.variable.teamcity_root}/buildAgent/lib/agent.jar"/>
+    <pathelement location="${path.variable.teamcity_root}/devPackage/common-api.jar"/>
+    <pathelement location="${path.variable.teamcity_root}/devPackage/agent-api.jar"/>
+    <pathelement location="${path.variable.teamcity_root}/webapps/ROOT/WEB-INF/lib/annotations.jar"/>
+    <pathelement location="${vb6build-common.output.dir}"/>
+    <pathelement location="${path.variable.teamcity_root}/webapps/ROOT/WEB-INF/lib/log4j-1.2.12.jar"/>
+    <pathelement location="${path.variable.teamcity_root}/webapps/ROOT/WEB-INF/lib/util.jar"/>
+    <pathelement location="${path.variable.teamcity_root}/webapps/ROOT/WEB-INF/lib/openapi.jar"/>
+  </path>
+  
+  <path id="vb6build-agent.runtime.module.classpath">
+    <pathelement location="${vb6build-agent.output.dir}"/>
+    <pathelement location="${path.variable.teamcity_root}/buildAgent/lib/agent.jar"/>
+    <pathelement location="${path.variable.teamcity_root}/devPackage/common-api.jar"/>
+    <pathelement location="${path.variable.teamcity_root}/devPackage/agent-api.jar"/>
+    <pathelement location="${path.variable.teamcity_root}/webapps/ROOT/WEB-INF/lib/annotations.jar"/>
+    <pathelement location="${vb6build-common.output.dir}"/>
+    <pathelement location="${path.variable.teamcity_root}/webapps/ROOT/WEB-INF/lib/annotations.jar"/>
+    <pathelement location="${path.variable.teamcity_root}/webapps/ROOT/WEB-INF/lib/log4j-1.2.12.jar"/>
+    <pathelement location="${path.variable.teamcity_root}/webapps/ROOT/WEB-INF/lib/util.jar"/>
+    <pathelement location="${path.variable.teamcity_root}/webapps/ROOT/WEB-INF/lib/openapi.jar"/>
+  </path>
+  
+  
+  <patternset id="excluded.from.module.vb6build-agent">
+    <patternset refid="ignored.files"/>
+  </patternset>
+  
+  <patternset id="excluded.from.compilation.vb6build-agent">
+    <patternset refid="excluded.from.module.vb6build-agent"/>
+  </patternset>
+  
+  <path id="vb6build-agent.module.sourcepath">
+    <dirset dir="${module.vb6build-agent.basedir}/vb6build-agent">
+      <include name="src"/>
+    </dirset>
+  </path>
+  
+  
+  <target name="compile.module.vb6build-agent" depends="compile.module.vb6build-agent.production" description="Compile module vb6build"/>
+  
+  <target name="compile.module.vb6build-agent.production" depends="compile.module.vb6build-common" description="Compile module vb6build; production classes">
+    <mkdir dir="${vb6build-agent.output.dir}"/>
+    <javac destdir="${vb6build-agent.output.dir}" debug="${compiler.debug}" nowarn="${compiler.generate.no.warnings}" memorymaximumsize="${compiler.max.memory}" fork="true">
+      <compilerarg line="${compiler.args.vb6build}"/>
+      <bootclasspath refid="vb6build-agent.module.bootclasspath"/>
+      <classpath refid="vb6build-agent.module.production.classpath"/>
+      <src refid="vb6build-agent.module.sourcepath"/>
+      <patternset refid="excluded.from.compilation.vb6build-agent"/>
+    </javac>
+    
+    <copy todir="${vb6build-agent.output.dir}">
+      <fileset dir="${module.vb6build-agent.basedir}/vb6build-agent/src">
+        <patternset refid="compiler.resources"/>
+        <type type="file"/>
+      </fileset>
+    </copy>
+  </target>
+  
+  <target name="clean.module.vb6build" description="cleanup module">
+    <delete dir="${vb6build-agent.output.dir}"/>
+  </target>
+  
+  
+  <!-- Module vb6build-server -->
+  
+  <dirname property="module.vb6build-server.basedir" file="${ant.file}"/>
+  
+  
+  
+  <property name="compiler.args.vb6build-server" value="${compiler.args}"/>
+  
+  <property name="vb6build-server.output.dir" value="${module.vb6build-server.basedir}/vb6build-server/classes"/>
+  <property name="vb6build-server.testoutput.dir" value="${module.vb6build-server.basedir}/vb6build-server/classes"/>
+  
+  <path id="vb6build-server.module.bootclasspath">
+    <!-- Paths to be included in compilation bootclasspath -->
+  </path>
+  
+  <path id="vb6build-server.module.production.classpath">
+    <pathelement location="${path.variable.teamcity_root}/devPackage/common-api.jar"/>
+    <pathelement location="${path.variable.teamcity_root}/devPackage/server-api.jar"/>
+    <pathelement location="${path.variable.teamcity_root}/webapps/ROOT/WEB-INF/lib/annotations.jar"/>
+    <pathelement location="${path.variable.teamcity_root}/webapps/ROOT/WEB-INF/lib/openapi.jar"/>
+    <pathelement location="${path.variable.teamcity_root}/webapps/ROOT/WEB-INF/lib/spring.jar"/>
+    <pathelement location="${path.variable.teamcity_root}/webapps/ROOT/WEB-INF/lib/util.jar"/>
+    <pathelement location="${vb6build-common.output.dir}"/>
+    <pathelement location="${path.variable.teamcity_root}/webapps/ROOT/WEB-INF/lib/standard.jar"/>
+    <pathelement location="${path.variable.teamcity_root}/webapps/ROOT/WEB-INF/lib/jstl.jar"/>
+  </path>
+  
+  <path id="vb6build-server.runtime.production.module.classpath">
+    <pathelement location="${vb6build-server.output.dir}"/>
+    <pathelement location="${path.variable.teamcity_root}/devPackage/common-api.jar"/>
+    <pathelement location="${path.variable.teamcity_root}/devPackage/server-api.jar"/>
+    <pathelement location="${path.variable.teamcity_root}/webapps/ROOT/WEB-INF/lib/annotations.jar"/>
+    <pathelement location="${path.variable.teamcity_root}/webapps/ROOT/WEB-INF/lib/openapi.jar"/>
+    <pathelement location="${path.variable.teamcity_root}/webapps/ROOT/WEB-INF/lib/spring.jar"/>
+    <pathelement location="${path.variable.teamcity_root}/webapps/ROOT/WEB-INF/lib/util.jar"/>
+    <pathelement location="${vb6build-common.output.dir}"/>
+    <pathelement location="${path.variable.teamcity_root}/webapps/ROOT/WEB-INF/lib/annotations.jar"/>
+    <pathelement location="${path.variable.teamcity_root}/webapps/ROOT/WEB-INF/lib/standard.jar"/>
+    <pathelement location="${path.variable.teamcity_root}/webapps/ROOT/WEB-INF/lib/jstl.jar"/>
+  </path>
+  
+  <path id="vb6build-server.module.classpath">
+    <pathelement location="${vb6build-server.output.dir}"/>
+    <pathelement location="${path.variable.teamcity_root}/devPackage/common-api.jar"/>
+    <pathelement location="${path.variable.teamcity_root}/devPackage/server-api.jar"/>
+    <pathelement location="${path.variable.teamcity_root}/webapps/ROOT/WEB-INF/lib/annotations.jar"/>
+      <pathelement location="${path.variable.teamcity_root}/webapps/ROOT/WEB-INF/lib/openapi.jar"/>
+      <pathelement location="${path.variable.teamcity_root}/webapps/ROOT/WEB-INF/lib/spring.jar"/>
+      <pathelement location="${path.variable.teamcity_root}/webapps/ROOT/WEB-INF/lib/util.jar"/>
+    <pathelement location="${vb6build-common.output.dir}"/>
+    <pathelement location="${path.variable.teamcity_root}/webapps/ROOT/WEB-INF/lib/standard.jar"/>
+    <pathelement location="${path.variable.teamcity_root}/webapps/ROOT/WEB-INF/lib/jstl.jar"/>
+  </path>
+  
+  <path id="vb6build-server.runtime.module.classpath">
+    <pathelement location="${vb6build-server.output.dir}"/>
+    <pathelement location="${path.variable.teamcity_root}/devPackage/common-api.jar"/>
+    <pathelement location="${path.variable.teamcity_root}/devPackage/server-api.jar"/>
+    <pathelement location="${path.variable.teamcity_root}/webapps/ROOT/WEB-INF/lib/annotations.jar"/>
+    <pathelement location="${path.variable.teamcity_root}/webapps/ROOT/WEB-INF/lib/openapi.jar"/>
+    <pathelement location="${path.variable.teamcity_root}/webapps/ROOT/WEB-INF/lib/spring.jar"/>
+    <pathelement location="${path.variable.teamcity_root}/webapps/ROOT/WEB-INF/lib/util.jar"/>
+    <pathelement location="${vb6build-common.output.dir}"/>
+    <pathelement location="${path.variable.teamcity_root}/webapps/ROOT/WEB-INF/lib/annotations.jar"/>
+    <pathelement location="${path.variable.teamcity_root}/webapps/ROOT/WEB-INF/lib/standard.jar"/>
+    <pathelement location="${path.variable.teamcity_root}/webapps/ROOT/WEB-INF/lib/jstl.jar"/>
+  </path>
+  
+  
+  <patternset id="excluded.from.module.vb6build-server">
+    <patternset refid="ignored.files"/>
+  </patternset>
+  
+  <patternset id="excluded.from.compilation.vb6build-server">
+    <patternset refid="excluded.from.module.vb6build-server"/>
+  </patternset>
+  
+  <path id="vb6build-server.module.sourcepath">
+    <dirset dir="${module.vb6build-server.basedir}/vb6build-server">
+      <include name="src"/>
+      <include name="resources"/>
+    </dirset>
+  </path>
+  
+  
+  <target name="compile.module.vb6build-server" depends="compile.module.vb6build-server.production" description="Compile module vb6build-server"/>
+  
+  <target name="compile.module.vb6build-server.production" depends="compile.module.vb6build-common" description="Compile module vb6build-server; production classes">
+    <mkdir dir="${vb6build-server.output.dir}"/>
+    <javac destdir="${vb6build-server.output.dir}" debug="${compiler.debug}" nowarn="${compiler.generate.no.warnings}" memorymaximumsize="${compiler.max.memory}" fork="true">
+      <compilerarg line="${compiler.args.vb6build-server}"/>
+      <bootclasspath refid="vb6build-server.module.bootclasspath"/>
+      <classpath refid="vb6build-server.module.production.classpath"/>
+      <src refid="vb6build-server.module.sourcepath"/>
+      <patternset refid="excluded.from.compilation.vb6build-server"/>
+    </javac>
+    
+    <copy todir="${vb6build-server.output.dir}">
+      <fileset dir="${module.vb6build-server.basedir}/vb6build-server/src">
+        <patternset refid="compiler.resources"/>
+        <type type="file"/>
+      </fileset>
+      <fileset dir="${module.vb6build-server.basedir}/vb6build-server/src/buildServerResources">
+        <patternset refid="compiler.resources"/>
+        <type type="file"/>
+      </fileset>
+    </copy>
+  </target>
+
+  <target name="clean.module.vb6build-server" description="cleanup module">
+    <delete dir="${vb6build-server.output.dir}"/>
+    <delete dir="${vb6build-server.testoutput.dir}"/>
+  </target>
+  
+  <target name="init" description="Build initialization">
+    <!-- Perform any build initialization in this target -->
+  </target>
+  
+  <target name="clean" depends="clean.module.vb6build-common, clean.module.vb6build, clean.module.vb6build-server, clean.artifact.agent, clean.artifact.plugin_dist, clean.artifact.web" description="cleanup all"/>
+  
+  <target name="build.modules" depends="init, clean, compile.module.vb6build-common, compile.module.vb6build-agent, compile.module.vb6build-server" description="build all modules"/>
+  
+  <target name="init.artifacts">
+    <property name="artifacts.temp.dir" value="${basedir}/__artifacts_temp"/>
+    <property name="artifact.output.agent" value="${basedir}/.idea_artifacts/Agent"/>
+    <property name="artifact.output.plugin_dist" value="${basedir}/.idea_artifacts/dist"/>
+    <property name="artifact.output.web" value="${basedir}/.idea_artifacts/Web"/>
+    <mkdir dir="${artifacts.temp.dir}"/>
+    <property name="temp.jar.path.vb6build.jar" value="${artifacts.temp.dir}/vb6build.jar"/>
+    <property name="temp.jar.path.vb6build.zip" value="${artifacts.temp.dir}/vb6build.zip"/>
+    <property name="temp.jar.path.vb6build.zip2" value="${artifacts.temp.dir}/1/vb6build.zip"/>
+    <mkdir dir="${artifacts.temp.dir}/1"/>
+    <property name="temp.jar.path.vb6build.jar2" value="${artifacts.temp.dir}/1/vb6build.jar"/>
+    <property name="temp.jar.path.vb6build.jar3" value="${artifacts.temp.dir}/2/vb6build.jar"/>
+    <mkdir dir="${artifacts.temp.dir}/2"/>
+    <property name="temp.jar.path.vb6build.jar4" value="${artifacts.temp.dir}/3/vb6build.jar"/>
+    <mkdir dir="${artifacts.temp.dir}/3"/>
+  </target>
+  
+  <target name="clean.artifact.agent" description="clean Agent artifact output">
+    <delete dir="${artifact.output.agent}"/>
+  </target>
+  
+  <target name="clean.artifact.plugin_dist" description="clean Plugin Dist artifact output">
+    <delete dir="${artifact.output.plugin_dist}"/>
+  </target>
+  
+  <target name="clean.artifact.web" description="clean Web artifact output">
+    <delete dir="${artifact.output.web}"/>
+  </target>
+  
+  <target name="artifact.agent" depends="init.artifacts, compile.module.vb6build-agent, compile.module.vb6build-common" description="Build &apos;Agent&apos; artifact">
+    <mkdir dir="${artifact.output.agent}"/>
+    <jar destfile="${temp.jar.path.vb6build.jar}" duplicate="preserve" filesetmanifest="mergewithoutmain">
+      <zipfileset dir="${vb6build-agent.output.dir}"/>
+      <zipfileset dir="${vb6build-common.output.dir}"/>
+    </jar>
+    <copy todir="${artifact.output.agent}">
+      <fileset dir="${path.variable.teamcity_root}/buildAgent"/>
+    </copy>
+    <mkdir dir="${artifact.output.agent}/plugins"/>
+    <mkdir dir="${artifact.output.agent}/plugins/vb6build"/>
+    <copy file="${temp.jar.path.vb6build.jar}" tofile="${artifact.output.agent}/plugins/vb6build/vb6build.jar"/>
+  </target>
+  
+  <target name="artifact.plugin_dist" depends="init.artifacts, compile.module.vb6build-agent, compile.module.vb6build-common, compile.module.vb6build-server, compile.module.vb6build-common" description="Build &apos;Plugin Dist&apos; artifact">
+    <mkdir dir="${artifact.output.plugin_dist}"/>
+    <jar destfile="${temp.jar.path.vb6build.jar2}" duplicate="preserve" filesetmanifest="mergewithoutmain">
+      <zipfileset dir="${vb6build-agent.output.dir}"/>
+      <zipfileset dir="${vb6build-common.output.dir}"/>
+    </jar>
+    <zip destfile="${temp.jar.path.vb6build.zip2}">
+      <zipfileset file="${temp.jar.path.vb6build.jar2}" prefix="vb6build/lib"/>
+    </zip>
+    <jar destfile="${temp.jar.path.vb6build.jar3}" duplicate="preserve" filesetmanifest="mergewithoutmain">
+      <zipfileset dir="${vb6build-server.output.dir}"/>
+      <zipfileset dir="${vb6build-common.output.dir}"/>
+      <zipfileset dir="${basedir}/vb6build-server/src/buildServerResources"/>
+    </jar>
+    <zip destfile="${temp.jar.path.vb6build.zip}">
+      <zipfileset file="${temp.jar.path.vb6build.zip2}" prefix="agent"/>
+      <zipfileset file="${temp.jar.path.vb6build.jar3}" prefix="server"/>
+      <zipfileset file="${basedir}/teamcity-plugin.xml"/>
+    </zip>
+    <copy file="${temp.jar.path.vb6build.zip}" tofile="${artifact.output.plugin_dist}/vb6build.zip"/>
+  </target>
+  
+  <target name="artifact.web" depends="init.artifacts, compile.module.vb6build-common, compile.module.vb6build-server" description="Build &apos;Web&apos; artifact">
+    <mkdir dir="${artifact.output.web}"/>
+    <jar destfile="${temp.jar.path.vb6build.jar4}" duplicate="preserve" filesetmanifest="mergewithoutmain">
+      <zipfileset dir="${vb6build-common.output.dir}"/>
+      <zipfileset dir="${vb6build-server.output.dir}"/>
+    </jar>
+    <mkdir dir="${artifact.output.web}/WEB-INF"/>
+    <mkdir dir="${artifact.output.web}/WEB-INF/plugins"/>
+    <mkdir dir="${artifact.output.web}/WEB-INF/plugins/vb6build"/>
+    <mkdir dir="${artifact.output.web}/WEB-INF/plugins/vb6build/server"/>
+    <mkdir dir="${artifact.output.web}/WEB-INF/plugins/vb6build/server/lib"/>
+    <copy file="${temp.jar.path.vb6build.jar4}" tofile="${artifact.output.web}/WEB-INF/plugins/vb6build/server/lib/vb6build.jar"/>
+    <copy file="${basedir}/teamcity-plugin.xml" tofile="${artifact.output.web}/WEB-INF/plugins/vb6build/teamcity-plugin.xml"/>
+    <mkdir dir="${artifact.output.web}/plugins"/>
+    <mkdir dir="${artifact.output.web}/plugins/vb6build"/>
+    <copy todir="${artifact.output.web}/plugins/vb6build">
+      <fileset dir="${basedir}/vb6build-server/resources/buildServerResources"/>
+    </copy>
+    <copy todir="${artifact.output.web}">
+      <fileset dir="${path.variable.teamcity_root}/webapps/ROOT"/>
+    </copy>
+  </target>
+  
+  <target name="build.all.artifacts" depends="artifact.agent, artifact.plugin_dist, artifact.web" description="Build all artifacts">
+    
+    <!-- Delete temporary files -->
+    <delete dir="${artifacts.temp.dir}"/>
+  </target>
+  
+  <target name="all" depends="build.modules, build.all.artifacts" description="build all"/>
+</project>

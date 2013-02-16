@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/vb6build-agent/vb6build-agent.iml" filepath="$PROJECT_DIR$/vb6build-agent/vb6build-agent.iml" />
+      <module fileurl="file://$PROJECT_DIR$/vb6build-common/vb6build-common.iml" filepath="$PROJECT_DIR$/vb6build-common/vb6build-common.iml" />
+      <module fileurl="file://$PROJECT_DIR$/vb6build-server/vb6build-server.iml" filepath="$PROJECT_DIR$/vb6build-server/vb6build-server.iml" />
+    </modules>
+  </component>
+</project>
+

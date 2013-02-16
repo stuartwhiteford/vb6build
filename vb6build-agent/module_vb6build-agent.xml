@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="module_vb6build-agent" default="compile.module.vb6build-agent">
+  <dirname property="module.vb6build-agent.basedir" file="/module_vb6build-agent.xml"/>
+  
+  <property name="module.jdk.home.vb6build-agent" value="${jdk.home.1.6_(1)}"/>
+  <property name="module.jdk.bin.vb6build-agent" value="${jdk.bin.1.6_(1)}"/>
+  <property name="module.jdk.classpath.vb6build-agent" value="jdk.classpath.1.6_(1)"/>
+  
+  <property name="compiler.args.vb6build-agent" value="${compiler.args}"/>
+  
+  <property name="vb6build-agent.output.dir" value="vb6build-agent/../out/production/vb6build-agent"/>
+  <property name="vb6build-agent.testoutput.dir" value="vb6build-agent/../out/test/vb6build-agent"/>
+  
+  <path id="vb6build-agent.module.bootclasspath">
+    <!-- Paths to be included in compilation bootclasspath -->
+  </path>
+  
+  <path id="vb6build-agent.module.production.classpath">
+    <path refid="${module.jdk.classpath.vb6build-agent}"/>
+    <pathelement location="${vb6build-common.output.dir}"/>
+    <pathelement location="C:/TeamCity/devPackage/server-api.jar"/>
+    <pathelement location="C:/TeamCity/devPackage/common-api.jar"/>
+    <pathelement location="C:/TeamCity/devPackage/agent-api.jar"/>
+    <path refid="library.teamcity_open_api_agent.classpath"/>
+    <path refid="library.teamcity_open_api_common.classpath"/>
+    <path refid="library.teamcity_third-party_common.classpath"/>
+  </path>
+  
+  <path id="vb6build-agent.runtime.production.module.classpath">
+    <pathelement location="${vb6build-agent.output.dir}"/>
+    <path refid="vb6build-common.runtime.production.module.classpath"/>
+    <path refid="library.teamcity_open_api_agent.classpath"/>
+    <path refid="library.teamcity_open_api_common.classpath"/>
+    <path refid="library.teamcity_third-party_common.classpath"/>
+  </path>
+  
+  <path id="vb6build-agent.module.classpath">
+    <path refid="${module.jdk.classpath.vb6build-agent}"/>
+    <pathelement location="${vb6build-agent.output.dir}"/>
+    <pathelement location="${vb6build-common.testoutput.dir}"/>
+    <pathelement location="${vb6build-common.output.dir}"/>
+    <pathelement location="C:/TeamCity/devPackage/server-api.jar"/>
+    <pathelement location="C:/TeamCity/devPackage/common-api.jar"/>
+    <pathelement location="C:/TeamCity/devPackage/agent-api.jar"/>
+    <path refid="library.teamcity_open_api_agent.classpath"/>
+    <path refid="library.teamcity_open_api_common.classpath"/>
+    <path refid="library.teamcity_third-party_common.classpath"/>
+  </path>
+  
+  <path id="vb6build-agent.runtime.module.classpath">
+    <pathelement location="${vb6build-agent.testoutput.dir}"/>
+    <pathelement location="${vb6build-agent.output.dir}"/>
+    <path refid="vb6build-common.runtime.module.classpath"/>
+    <path refid="library.teamcity_open_api_agent.classpath"/>
+    <path refid="library.teamcity_open_api_common.classpath"/>
+    <path refid="library.teamcity_third-party_common.classpath"/>
+  </path>
+  
+  
+  <patternset id="excluded.from.module.vb6build-agent">
+    <patternset refid="ignored.files"/>
+  </patternset>
+  
+  <patternset id="excluded.from.compilation.vb6build-agent">
+    <patternset refid="excluded.from.module.vb6build-agent"/>
+  </patternset>
+  
+  <path id="vb6build-agent.module.sourcepath">
+    <dirset dir="vb6build-agent">
+      <include name="src"/>
+    </dirset>
+  </path>
+  
+  
+  <target name="compile.module.vb6build-agent" depends="compile.module.vb6build-agent.production,compile.module.vb6build-agent.tests" description="Compile module vb6Build-agent"/>
+  
+  <target name="compile.module.vb6build-agent.production" depends="register.custom.compilers,compile.module.vb6build-common" description="Compile module vb6Build-agent; production classes">
+    <mkdir dir="${vb6build-agent.output.dir}"/>
+    <javac2 destdir="${vb6build-agent.output.dir}" debug="${compiler.debug}" nowarn="${compiler.generate.no.warnings}" memorymaximumsize="${compiler.max.memory}" fork="true" executable="${module.jdk.bin.vb6build-agent}/javac">
+      <compilerarg line="${compiler.args.vb6build-agent}"/>
+      <bootclasspath refid="vb6build-agent.module.bootclasspath"/>
+      <classpath refid="vb6build-agent.module.production.classpath"/>
+      <src refid="vb6build-agent.module.sourcepath"/>
+      <patternset refid="excluded.from.compilation.vb6build-agent"/>
+    </javac2>
+    
+    <copy todir="${vb6build-agent.output.dir}">
+      <fileset dir="vb6build-agent/src">
+        <patternset refid="compiler.resources"/>
+        <type type="file"/>
+      </fileset>
+    </copy>
+  </target>
+  
+  <target name="compile.module.vb6build-agent.tests" depends="register.custom.compilers,compile.module.vb6build-agent.production" description="compile module vb6Build-agent; test classes" unless="skip.tests"/>
+  
+  <target name="clean.module.vb6build-agent" description="cleanup module">
+    <delete dir="${vb6build-agent.output.dir}"/>
+    <delete dir="${vb6build-agent.testoutput.dir}"/>
+  </target>
+</project>
